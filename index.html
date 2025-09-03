@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ParticlesMark Test Application</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 20px;
+        background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        color: #fff;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        overflow-x: auto;
+      }
+
+      h1 {
+        margin: 0 0 30px 0;
+        font-size: 2.5em;
+        text-align: center;
+        background: linear-gradient(45deg, #00d4ff, #ff6b6b);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .canvas-container {
+        margin-bottom: 40px;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        background: rgba(255, 255, 255, 0.05);
+        padding: 20px;
+      }
+
+      canvas {
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        display: block;
+        background: #000;
+        transition: border-color 0.3s ease;
+        position: relative;
+        z-index: 1000;
+        pointer-events: auto;
+        position: relative;
+        z-index: 10;
+        pointer-events: auto;
+      }
+
+      canvas:hover {
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+
+      .controls {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        width: 100%;
+        max-width: 1200px;
+        margin-bottom: 30px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+      }
+
+      .control-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+        transition: all 0.3s ease;
+      }
+
+      .control-group:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px);
+      }
+
+      label {
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: #e0e0e0;
+        font-size: 0.9em;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 10px 15px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        color: #fff;
+        font-size: 1em;
+        transition: all 0.3s ease;
+        text-align: center;
+      }
+
+      input:focus,
+      select:focus {
+        outline: none;
+        border-color: #00d4ff;
+        background: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+      }
+
+      input:hover,
+      select:hover {
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+
+      /* Improve dropdown option readability */
+      select option {
+        background: #333;
+        color: #fff;
+        padding: 5px;
+      }
+
+      /* Ensure selected option is visible */
+      select option:checked {
+        background: #00d4ff;
+        color: #000;
+      }
+
+      button {
+        padding: 15px 30px;
+        background: linear-gradient(45deg, #00d4ff, #0099cc);
+        color: #fff;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 1.1em;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      button:hover {
+        background: linear-gradient(45deg, #0099cc, #00d4ff);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      .instructions {
+        text-align: center;
+        margin-top: 20px;
+        color: #ccc;
+        font-size: 0.9em;
+        max-width: 800px;
+      }
+
+      @media (max-width: 768px) {
+        .controls {
+          grid-template-columns: 1fr;
+        }
+
+        h1 {
+          font-size: 2em;
+        }
+
+        .canvas-container {
+          padding: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>ParticlesMark Test Application</h1>
+
+    <div class="canvas-container">
+      <canvas id="canvas" width="1280" height="720"></canvas>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label for="particlesPerExplosion">Particles per Effect</label>
+        <input
+          type="number"
+          id="particlesPerExplosion"
+          value="30"
+          min="1"
+          max="100"
+        />
+      </div>
+      <div class="control-group">
+        <label for="particlesMinSpeed">Min Speed</label>
+        <input
+          type="number"
+          id="particlesMinSpeed"
+          value="3"
+          min="0"
+          max="20"
+          step="0.1"
+        />
+      </div>
+      <div class="control-group">
+        <label for="particlesMaxSpeed">Max Speed</label>
+        <input
+          type="number"
+          id="particlesMaxSpeed"
+          value="6"
+          min="0"
+          max="20"
+          step="0.1"
+        />
+      </div>
+      <div class="control-group">
+        <label for="particlesMinSize">Min Size</label>
+        <input
+          type="number"
+          id="particlesMinSize"
+          value="1"
+          min="0.1"
+          max="10"
+          step="0.1"
+        />
+      </div>
+      <div class="control-group">
+        <label for="particlesMaxSize">Max Size</label>
+        <input
+          type="number"
+          id="particlesMaxSize"
+          value="6"
+          min="0.1"
+          max="10"
+          step="0.1"
+        />
+      </div>
+      <div class="control-group">
+        <label for="lifetime">Lifetime (seconds, optional)</label>
+        <input type="number" id="lifetime" value="2" min="0.1" step="0.1" />
+      </div>
+      <div class="control-group">
+        <label for="effectType">Effect Type</label>
+        <select id="effectType">
+          <option value="explosion">Explosion</option>
+          <option value="confetti">Confetti</option>
+          <option value="fireworks">Fireworks</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="lifetimeJitter">Lifetime jitter</label>
+        <input
+          type="number"
+          id="lifetimeJitter"
+          value="0.5"
+          min="0"
+          max="1"
+          step="0.01"
+        />
+      </div>
+      <div class="control-group">
+        <label for="gravity">Gravity</label>
+        <input
+          type="number"
+          id="gravity"
+          value="0.02"
+          min="-1"
+          max="1"
+          step="0.01"
+        />
+      </div>
+      <div class="control-group">
+        <label for="glowStrengthNumber">Glow Strength</label>
+        <input
+          type="number"
+          id="glowStrengthNumber"
+          min="0"
+          max="5"
+          step="0.1"
+          value="0"
+        />
+      </div>
+    </div>
+
+    <button id="triggerEffect">Trigger Effect at Center</button>
+
+    <script type="module" src="index.js"></script>
+  </body>
+</html>
