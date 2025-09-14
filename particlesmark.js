@@ -2,7 +2,6 @@ export class ParticlesMark {
   constructor(canvas, options = {}) {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
-    this.background = options.background || "#333";
     this.effects = [];
   }
 

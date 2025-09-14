@@ -116,14 +116,23 @@ function getEffectOptions() {
     particlesMaxSize,
     gravity: !isNaN(gravity) ? gravity : 0.02,
     lifetimeJitter,
-    // Glow options passed through to effects (ParticlesMark will use them when drawing)
-    // Glow is active only when glowStrength > 0
     glowStrength: !isNaN(parseFloat(glowStrengthRaw))
       ? parseFloat(glowStrengthRaw)
       : 0,
   };
   if (!isNaN(lifetime) && lifetime > 0) {
     opts.lifetimeMs = lifetime * 1000;
+  }
+
+  // Custom color logic for all effects
+  const useCustomColors = document.getElementById("useCustomColors").checked;
+  if (useCustomColors) {
+    opts.rMin = parseInt(document.getElementById("rMin").value, 10);
+    opts.rMax = parseInt(document.getElementById("rMax").value, 10);
+    opts.gMin = parseInt(document.getElementById("gMin").value, 10);
+    opts.gMax = parseInt(document.getElementById("gMax").value, 10);
+    opts.bMin = parseInt(document.getElementById("bMin").value, 10);
+    opts.bMax = parseInt(document.getElementById("bMax").value, 10);
   }
   return opts;
 }
@@ -168,3 +177,33 @@ triggerButton.addEventListener("click", () => {
   const centerY = canvas.height / 2;
   triggerEffect(centerX, centerY);
 });
+
+// Show/hide custom color controls based on checkbox and effect type
+(function setupCustomColorControls() {
+  const useCustomColorsCheckbox = document.getElementById("useCustomColors");
+  const customColorControls = document.getElementById("customColorControls");
+  if (!useCustomColorsCheckbox || !customColorControls || !effectTypeSelect)
+    return;
+
+  function updateCustomColorVisibility() {
+    if (useCustomColorsCheckbox.checked) {
+      customColorControls.classList.add("visible");
+      customColorControls.setAttribute("aria-hidden", "false");
+    } else {
+      customColorControls.classList.remove("visible");
+      customColorControls.setAttribute("aria-hidden", "true");
+    }
+  }
+
+  useCustomColorsCheckbox.addEventListener(
+    "change",
+    updateCustomColorVisibility
+  );
+  effectTypeSelect.addEventListener("change", updateCustomColorVisibility);
+  // Ensure correct state on load
+  if (document.readyState === "loading") {
+    window.addEventListener("DOMContentLoaded", updateCustomColorVisibility);
+  } else {
+    updateCustomColorVisibility();
+  }
+})();

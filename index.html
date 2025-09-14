@@ -179,6 +179,111 @@
           padding: 10px;
         }
       }
+      /* Custom color controls: single row of 6 items, wrap on small screens */
+      /* Make the control span the full width of the grid to avoid overlap */
+      /* Visibility of #customColorControls is handled via the `.visible` class */
+      #customColorControls .pairs {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+        width: 100%;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: flex-start;
+        overflow-x: auto; /* horizontal fallback if viewport is too narrow */
+        padding-bottom: 4px;
+      }
+      #customColorControls .pairs .pair {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        min-width: 64px;
+        max-width: 88px;
+      }
+      /* Make number inputs a bit more compact */
+      #customColorControls input[type="number"] {
+        padding: 6px 8px;
+        width: 64px;
+        height: 36px;
+        border-radius: 8px;
+        font-size: 0.95em;
+        text-align: center;
+        /* Hide spinners for number inputs (Chrome, Edge, Safari) */
+        -webkit-appearance: none;
+        appearance: textfield;
+        /* Hide spinners for Firefox */
+        /* Firefox uses a different selector */
+        /* Remove arrows in Firefox */
+        /* stylelint-disable-next-line selector-type-no-unknown */
+      }
+      /* Remove arrows in Firefox */
+      #customColorControls input[type="number"]::-webkit-outer-spin-button,
+      #customColorControls input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      #customColorControls input[type="number"] {
+        -moz-appearance: textfield;
+      }
+      /* Smaller labels for the compact control row */
+      #customColorControls .pair label {
+        font-size: 0.78em;
+        color: #d8d8d8;
+        margin-bottom: 2px;
+      }
+      /* Show when JS toggles visibility */
+      #customColorControls.visible {
+        display: flex !important;
+      }
+      /* Hide by default; JS will set inline display when needed */
+      /* Responsive: allow wrapping into multiple lines on narrow viewports */
+      @media (max-width: 700px) {
+        #customColorControls .pairs {
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+        #customColorControls .pairs .pair {
+          min-width: 48%;
+          max-width: none;
+        }
+      }
+      /* Inline layout for custom color inputs placed beside the checkbox */
+      .control-group.inline-pairs {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        align-items: flex-end;
+        justify-content: flex-start;
+        padding-bottom: 0;
+      }
+      .control-group.inline-pairs .checkbox-label {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 0;
+        min-width: 140px;
+      }
+      .control-group.inline-pairs .pairs {
+        display: none;
+        flex-direction: row;
+        gap: 8px;
+        align-items: flex-end;
+        margin-bottom: 0;
+        margin-left: 80px;
+      }
+      .control-group.inline-pairs .pairs.visible {
+        display: flex;
+      }
+      .control-group.inline-pairs .pair {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        min-width: 56px;
+        max-width: 72px;
+      }
     </style>
   </head>
   <body>
@@ -288,7 +393,41 @@
           value="0"
         />
       </div>
+      <div class="control-group inline-pairs">
+        <span class="checkbox-label">
+          <input type="checkbox" id="useCustomColors" />
+          <label for="useCustomColors">Use custom colors</label>
+        </span>
+        <div id="customColorControls" class="pairs" aria-hidden="true">
+          <div class="pair">
+            <label for="rMin">rMin</label>
+            <input type="number" id="rMin" value="50" min="0" max="255" />
+          </div>
+          <div class="pair">
+            <label for="rMax">rMax</label>
+            <input type="number" id="rMax" value="100" min="0" max="255" />
+          </div>
+          <div class="pair">
+            <label for="gMin">gMin</label>
+            <input type="number" id="gMin" value="200" min="0" max="255" />
+          </div>
+          <div class="pair">
+            <label for="gMax">gMax</label>
+            <input type="number" id="gMax" value="255" min="0" max="255" />
+          </div>
+          <div class="pair">
+            <label for="bMin">bMin</label>
+            <input type="number" id="bMin" value="0" min="0" max="255" />
+          </div>
+          <div class="pair">
+            <label for="bMax">bMax</label>
+            <input type="number" id="bMax" value="50" min="0" max="255" />
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- Custom colors: inline pairs will be inserted in the checkbox control-group -->
 
     <button id="triggerEffect">Trigger Effect at Center</button>
 
