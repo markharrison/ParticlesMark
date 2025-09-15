@@ -167,8 +167,22 @@ export class ParticlesMark {
   }
 
   destroy() {
+    if (Array.isArray(this.effects)) {
+      for (let i = 0; i < this.effects.length; i++) {
+        const effect = this.effects[i];
+        if (effect && Array.isArray(effect.particles)) {
+          effect.particles.length = 0;
+        }
+        // Remove any other references in effect
+        for (const key in effect) {
+          if (Object.hasOwnProperty.call(effect, key)) {
+            effect[key] = null;
+          }
+        }
+      }
+    }
+
     this.effects = [];
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
   static Explosion = class {
