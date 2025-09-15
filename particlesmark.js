@@ -183,6 +183,8 @@ export class ParticlesMark {
     }
 
     this.effects = [];
+    this.canvas = null;
+    this.ctx = null;
   }
 
   static Explosion = class {
