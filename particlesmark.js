@@ -173,7 +173,7 @@ export class ParticlesMark {
         if (effect && Array.isArray(effect.particles)) {
           effect.particles.length = 0;
         }
-        // Remove any other references in effect
+
         for (const key in effect) {
           if (Object.hasOwnProperty.call(effect, key)) {
             effect[key] = null;
