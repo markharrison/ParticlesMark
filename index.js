@@ -1,4 +1,4 @@
-import { ParticlesMark } from "./particlesmark.js";
+import { MarkJSParticles } from "./markjsparticles.js";
 
 const canvas = document.getElementById("canvas");
 const triggerButton = document.getElementById("triggerEffect");
@@ -45,7 +45,7 @@ const options = {
   background: "#222",
 };
 
-const pm = new ParticlesMark(canvas, options);
+const pm = new MarkJSParticles(canvas, options);
 
 // glow strength uses a single numeric input (#glowStrengthNumber)
 
@@ -53,7 +53,7 @@ const pm = new ParticlesMark(canvas, options);
 window.addEventListener("keydown", (e) => {
   if (e.key === "d" || e.key === "D") {
     pm.debug = !pm.debug;
-    console.log("ParticlesMark debug:", pm.debug);
+    console.log("MarkJSParticles debug:", pm.debug);
   }
 });
 

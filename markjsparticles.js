@@ -1,4 +1,4 @@
-export class ParticlesMark {
+export class MarkJSParticles {
   constructor(canvas, options = {}) {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
@@ -152,13 +152,13 @@ export class ParticlesMark {
     let effect;
     switch (type) {
       case "explosion":
-        effect = new ParticlesMark.Explosion(x, y, options);
+        effect = new MarkJSParticles.Explosion(x, y, options);
         break;
       case "confetti":
-        effect = new ParticlesMark.Confetti(x, y, options);
+        effect = new MarkJSParticles.Confetti(x, y, options);
         break;
       case "fireworks":
-        effect = new ParticlesMark.Fireworks(x, y, options);
+        effect = new MarkJSParticles.Fireworks(x, y, options);
         break;
       default:
         throw new Error(`Unknown effect type: ${type}`);
@@ -215,7 +215,7 @@ export class ParticlesMark {
       );
       for (let i = 0; i < this.particlesPerExplosion; i++) {
         this.particles.push(
-          new ParticlesMark.Particle(
+          new MarkJSParticles.Particle(
             x,
             y,
             this.particlesMinSpeed,
@@ -264,7 +264,7 @@ export class ParticlesMark {
         options
       );
       for (let i = 0; i < this.particlesPerExplosion; i++) {
-        const p = new ParticlesMark.Particle(
+        const p = new MarkJSParticles.Particle(
           x,
           y,
           this.particlesMinSpeed,
@@ -336,7 +336,7 @@ export class ParticlesMark {
       );
       for (let i = 0; i < this.particlesPerExplosion; i++) {
         this.particles.push(
-          new ParticlesMark.Particle(
+          new MarkJSParticles.Particle(
             x,
             y,
             this.particlesMinSpeed,
@@ -391,7 +391,7 @@ export class ParticlesMark {
       this.x += posJitter;
       this.y += posJitter;
 
-      this.size = ParticlesMark.randRange(minSize, maxSize, false);
+      this.size = MarkJSParticles.randRange(minSize, maxSize, false);
 
       const o = Object.assign({}, opts);
       if (o.frictionMin != null) o.frictionMin = Number(o.frictionMin);
@@ -409,11 +409,11 @@ export class ParticlesMark {
       const bMin = o.bMin ?? 105;
       const bMax = o.bMax ?? 255;
 
-      this.r = Math.floor(ParticlesMark.randRange(rMin, rMax, false));
-      this.g = Math.floor(ParticlesMark.randRange(gMin, gMax, false));
-      this.b = Math.floor(ParticlesMark.randRange(bMin, bMax, false));
+      this.r = Math.floor(MarkJSParticles.randRange(rMin, rMax, false));
+      this.g = Math.floor(MarkJSParticles.randRange(gMin, gMax, false));
+      this.b = Math.floor(MarkJSParticles.randRange(bMin, bMax, false));
 
-      this.friction = ParticlesMark.randRange(
+      this.friction = MarkJSParticles.randRange(
         o.frictionMin ?? 0.96,
         o.frictionMax ?? 0.995,
         false
@@ -428,7 +428,7 @@ export class ParticlesMark {
       const baseLifetimeMs =
         o.lifetimeMs != null
           ? Number(o.lifetimeMs)
-          : ParticlesMark.randRange(o.lifetimeMinMs, o.lifetimeMaxMs, false);
+          : MarkJSParticles.randRange(o.lifetimeMinMs, o.lifetimeMaxMs, false);
 
       const j = Math.max(0, Math.min(1, Number(o.lifetimeJitter)));
       const minMul = 1 - j;

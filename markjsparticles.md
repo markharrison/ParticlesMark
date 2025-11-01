@@ -1,14 +1,14 @@
-# ParticlesMark Developer Documentation
+# MarkJSParticles Developer Documentation
 
 ## Overview
 
-ParticlesMark is a JavaScript class that manages particle effects on an HTML5 Canvas. It provides methods to update and render particles, designed to integrate with an external game loop. The animation loop is handled outside the class, allowing for flexible integration with your application's timing.
+MarkJSParticles is a JavaScript class that manages particle effects on an HTML5 Canvas. It provides methods to update and render particles, designed to integrate with an external game loop. The animation loop is handled outside the class, allowing for flexible integration with your application's timing.
 
 ## Constructor
 
-### `new ParticlesMark(canvas, options)`
+### `new MarkJSParticles(canvas, options)`
 
-Creates a new ParticlesMark instance.
+Creates a new MarkJSParticles instance.
 
 #### Parameters
 
@@ -20,7 +20,7 @@ Creates a new ParticlesMark instance.
 
 ```javascript
 const canvas = document.getElementById("myCanvas");
-const pm = new ParticlesMark(canvas);
+const pm = new MarkJSParticles(canvas);
 ```
 
 ## Methods
@@ -121,7 +121,7 @@ pm.destroy();
 
 ## Integration with Game Loop
 
-ParticlesMark is designed to work with an external game loop. Here's a basic example:
+MarkJSParticles is designed to work with an external game loop. Here's a basic example:
 
 ```javascript
 let lastTime = 0;
@@ -148,7 +148,7 @@ All effect parameters are passed through the `options` object when calling `addE
 
 ### Glow (visual)
 
-ParticlesMark exposes a single visual parameter to control particle glow: `glowStrength`.
+MarkJSParticles exposes a single visual parameter to control particle glow: `glowStrength`.
 
 - Type: Number
 - Default: `0` (off)
@@ -186,13 +186,13 @@ Represents an individual particle within an effect.
 
 ## Memory Management
 
-ParticlesMark automatically removes particles and effects when they are no longer active. Call `destroy()` when you're done with the instance to free up resources.
+MarkJSParticles automatically removes particles and effects when they are no longer active. Call `destroy()` when you're done with the instance to free up resources.
 
-## Extending ParticlesMark
+## Extending MarkJSParticles
 
 To add new effects:
 
-1. Create a new static class for the effect (e.g., `ParticlesMark.Firework`)
+1. Create a new static class for the effect (e.g., `MarkJSParticles.Firework`)
 2. Update the `addEffect()` method to handle the new type
 3. Implement any specific logic in the effect class
 

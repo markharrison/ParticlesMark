@@ -1,8 +1,8 @@
-# ParticlesMark
+# MarkJSParticles
 
-![ParticlesMark test app](./scrn1.png)
+![MarkJSParticles test app](./scrn1.png)
 
-ParticlesMark is a lightweight JavaScript library for creating particle effects on HTML5 Canvas. It provides a small, dependency-free API to add particle-based animations (explosions, confetti, fireworks, etc.) to your web pages or apps.
+MarkJSParticles is a lightweight JavaScript library for creating particle effects on HTML5 Canvas. It provides a small, dependency-free API to add particle-based animations (explosions, confetti, fireworks, etc.) to your web pages or apps.
 
 ## Features
 
@@ -15,22 +15,22 @@ ParticlesMark is a lightweight JavaScript library for creating particle effects 
 
 ## Documentation
 
-See the detailed developer documentation for API reference and examples: [particlesmark.md](./particlesmark.md)
+See the detailed developer documentation for API reference and examples: [markjsparticles.md](./markjsparticles.md)
 
 ## Quick Start
 
-1. Include `particlesmark.js` as an ES module in your page.
+1. Include `markjsparticles.js` as an ES module in your page.
 2. Create a `<canvas>` element in your HTML and size it.
-3. Instantiate `ParticlesMark` and drive it from your game or render loop.
+3. Instantiate `MarkJSParticles` and drive it from your game or render loop.
 4. Use `addEffect()` to spawn effects at coordinates.
 
 ## Example
 
 ```javascript
-import { ParticlesMark } from "./particlesmark.js";
+import { MarkJSParticles } from "./markjsparticles.js";
 
 const canvas = document.getElementById("myCanvas");
-const pm = new ParticlesMark(canvas);
+const pm = new MarkJSParticles(canvas);
 
 canvas.addEventListener("click", (e) => {
   const rect = canvas.getBoundingClientRect();
@@ -46,7 +46,7 @@ canvas.addEventListener("click", (e) => {
 });
 ```
 
-Note: the host application is responsible for clearing the canvas before calling `pm.render()` (for example, fill the background each frame). ParticlesMark only draws particles.
+Note: the host application is responsible for clearing the canvas before calling `pm.render()` (for example, fill the background each frame). MarkJSParticles only draws particles.
 
 ## Configurable Parameters
 
@@ -72,7 +72,7 @@ The test app exposes a single numeric input (`glowStrengthNumber`) for precise c
 
 ## Integration with Game Loop
 
-ParticlesMark expects to be driven by an external loop. Example:
+MarkJSParticles expects to be driven by an external loop. Example:
 
 ```javascript
 let lastTime = performance.now();
@@ -104,4 +104,4 @@ MIT License
 
 ## Reverting the Glow Change
 
-If you want to revert the glow behavior entirely, undo the recent changes to `particlesmark.js` where shadow properties are set during drawing. Alternatively, set `glowStrength` to `0` in the host app's options or the test UI to disable at runtime.
+If you want to revert the glow behavior entirely, undo the recent changes to `markjsparticles.js` where shadow properties are set during drawing. Alternatively, set `glowStrength` to `0` in the host app's options or the test UI to disable at runtime.
