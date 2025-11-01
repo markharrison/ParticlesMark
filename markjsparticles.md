@@ -14,7 +14,6 @@ Creates a new MarkJSParticles instance.
 
 - `canvas` (HTMLCanvasElement): The canvas element to draw on (required)
 - `options` (Object): Configuration options
-  - `options` (Object): Configuration options
 
 #### Example
 
@@ -52,9 +51,7 @@ Renders the particles to the canvas. Call this after `update()` in your render l
 pm.render();
 ```
 
-#### Parameters
-
--### `addEffect(type, coords, options)`
+### `addEffect(type, coords, options)`
 
 Adds an effect at the specified coordinates.
 
